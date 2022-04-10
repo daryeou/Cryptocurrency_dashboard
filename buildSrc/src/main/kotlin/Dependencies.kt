@@ -20,8 +20,23 @@ object Dependencies {
     const val ANDROID_MATERIAL = "com.google.android.material:material:${Versions.AndroidX.MATERIAL}"
     const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KotlinX.COROUTINES_CORE}"
     const val KOTLIN_COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KotlinX.COROUTINES_ANDROID}"
-    const val KOIN_ANDROID_SCOPE = "org.koin:koin-androidx-scope:${Versions.KOIN}"
-    const val KOIN_ANDROID_VIEWMODEL = "org.koin:koin-androidx-viewmodel:${Versions.KOIN}"
+    const val ANDROIDX_WORK_RUNTIME = "androidx.work:work-runtime-ktx:${Versions.AndroidX.WORK}"
+    const val ANDROIDX_WORK_MULTIPROCESS = "androidx.work:work-multiprocess:${Versions.AndroidX.WORK}"
+    const val KOIN_ANDROID = "io.insert-koin:koin-android:${Versions.KOIN}"
+    const val KOIN_ANDROID_COMPAT = "io.insert-koin:koin-android-compat:${Versions.KOIN}"
+    const val KOIN_ANDROIDX_WORKMANAGER = "io.insert-koin:koin-androidx-workmanager:${Versions.KOIN}"
+    const val KOIN_ANDROIDX_NAVIGATION = "io.insert-koin:koin-androidx-navigation:${Versions.KOIN}"
+    const val KOIN_ANDROIDX_COMPOSE = "io.insert-koin:koin-androidx-compose:${Versions.KOIN}"
+    const val RETROFIT2 = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT2}"
+    const val RETROFIT2_ADAPTER_RXJAVA = "com.squareup.retrofit2:adapter-rxjava2:${Versions.RETROFIT2}"
+    const val RETROFIT2_CONVERTER_GSON = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT2}"
+    const val RETROFIT2_CONVERTER_SCALARS = "com.squareup.retrofit2:converter-scalars:${Versions.RETROFIT2}"
+    const val OKHTTP3_BOM = "com.squareup.okhttp3:okhttp-bom:4.9.3" // BOM 버전 관리
+    const val OKHTTP3 = "com.squareup.okhttp3:okhttp"
+    const val OKHTTP3_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor"
+    const val FRAGMENT = "androidx.fragment:fragment:${Versions.AndroidX.FRAGMENT}"
+    const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:${Versions.AndroidX.FRAGMENT}"
+    const val FRAGMENT_TEST = "androidx.fragment:fragment-testing:${Versions.AndroidX.FRAGMENT}"
 }
 
 fun DependencyHandler.kotlin() {
@@ -39,13 +54,37 @@ fun DependencyHandler.appCompat() {
 }
 
 fun DependencyHandler.koin() {
-    implementation(Dependencies.KOIN_ANDROID_SCOPE)
-    implementation(Dependencies.KOIN_ANDROID_VIEWMODEL)
+    implementation(Dependencies.KOIN_ANDROID)
+    implementation(Dependencies.KOIN_ANDROID_COMPAT)
+    implementation(Dependencies.KOIN_ANDROIDX_WORKMANAGER)
+    implementation(Dependencies.KOIN_ANDROIDX_NAVIGATION)
+    implementation(Dependencies.KOIN_ANDROIDX_COMPOSE)
+}
+
+fun DependencyHandler.retrofit() {
+    implementation(Dependencies.OKHTTP3_BOM)
+    implementation(Dependencies.OKHTTP3)
+    implementation(Dependencies.OKHTTP3_LOGGING_INTERCEPTOR)
+    implementation(Dependencies.RETROFIT2)
+    implementation(Dependencies.RETROFIT2_ADAPTER_RXJAVA)
+    implementation(Dependencies.RETROFIT2_CONVERTER_GSON)
+    implementation(Dependencies.RETROFIT2_CONVERTER_SCALARS)
 }
 
 fun DependencyHandler.coroutine() {
     implementation(Dependencies.KOTLIN_COROUTINES_CORE)
     implementation(Dependencies.KOTLIN_COROUTINES_ANDROID)
+}
+
+fun DependencyHandler.work() {
+    implementation(Dependencies.ANDROIDX_WORK_RUNTIME)
+    implementation(Dependencies.ANDROIDX_WORK_MULTIPROCESS)
+}
+
+fun DependencyHandler.fragment() {
+    implementation(Dependencies.FRAGMENT)
+    implementation(Dependencies.FRAGMENT_KTX)
+    debugImplementation(Dependencies.FRAGMENT_TEST)
 }
 
 fun DependencyHandler.test() {

@@ -1,4 +1,4 @@
-package kr.lemonfox.docfriends_android_recruit
+package kr.lemonfox.coinmoa
 
 import org.junit.Test
 

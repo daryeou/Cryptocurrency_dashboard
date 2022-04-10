@@ -20,18 +20,25 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "${getDate()}_${applicationId}_${versionName}_${versionCode}")
         vectorDrawables.useSupportLibrary = true
+        buildConfigField("String", "BASE_URL", BuildConfig.DEV.HOME_DOMAIN)
     }
 
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = false // enables code shrinking and optimization
             isShrinkResources = false // Resource shrinking
+            isCrunchPngs = false // Png 압축 사용
+            isDebuggable = true
+            buildConfigField("Boolean", "DEBUG", "true")
         }
         getByName("release") {
             println("Release Build - It will be shrinking")
             isMinifyEnabled = true // enables code shrinking and optimization
             isShrinkResources = true // Resource shrinking
+            isCrunchPngs = true // Png 압축 사용
+            isDebuggable = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("Boolean", "DEBUG", "false")
         }
     }
 
@@ -72,18 +79,24 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
     variantFilter {
-        ignore = listOf("release").contains(name)
+        ignore = name.containsAnyOfIgnoreCase(listOf("Release"))
     }
 }
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("androidx.databinding:databinding-runtime:4.1.3")
     coreLibraryDesugaring(Dependencies.ANDROID_DESUGAR_JDK)
     kotlin()
     koin()
+    work()
+    fragment()
+    retrofit()
     appCompat()
     material()
     coroutine()
@@ -94,4 +107,11 @@ fun getDate(): String {
     val current = LocalDateTime.now()
     val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
     return current.format(formatter)
+}
+
+fun String.containsAnyOfIgnoreCase(keywords: List<String>): Boolean {
+    for (keyword in keywords) {
+        if (this.contains(keyword, true)) return true
+    }
+    return false
 }

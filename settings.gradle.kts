@@ -9,5 +9,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "Docfriends_Android_Recruit"
+rootProject.name = "Crypto_Dashboard_Android"
 include(":app")
